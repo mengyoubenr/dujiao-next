@@ -11,7 +11,6 @@ import (
 
 	"github.com/dujiao-next/internal/constants"
 	settingsapp "github.com/dujiao-next/internal/modules/settings/application"
-	"github.com/dujiao-next/internal/shared/jsonmap"
 
 	"github.com/shopspring/decimal"
 )
@@ -234,23 +233,4 @@ func buildOrderSubject(order *orderdomain.Order) string {
 		return ""
 	}
 	return strings.TrimSpace(order.OrderNo)
-}
-
-func pickOrderItemTitle(title jsonmap.JSON) string {
-	if title == nil {
-		return ""
-	}
-	for _, key := range constants.SupportedLocales {
-		if val, ok := title[key]; ok {
-			if str, ok := val.(string); ok && strings.TrimSpace(str) != "" {
-				return strings.TrimSpace(str)
-			}
-		}
-	}
-	for _, val := range title {
-		if str, ok := val.(string); ok && strings.TrimSpace(str) != "" {
-			return strings.TrimSpace(str)
-		}
-	}
-	return ""
 }
